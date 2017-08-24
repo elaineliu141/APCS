@@ -1,5 +1,5 @@
 /**
- * A set of 4 methods that all return integers.
+ * A set of 4 methods.
  * 
  * @author mickey
  *
@@ -51,6 +51,8 @@ public class Intro {
 	public static String coins(int n){
 		/**
 		 * Returns an amount in 5 cents and 2 cents based on the input.
+		 * For example: If the input is 27, this method will return "You can exchange 5 5-cents and 1 2-cents."
+		 * 
 		 * @param: int n
 		 * 
 		 */  
