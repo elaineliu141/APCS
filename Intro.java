@@ -6,13 +6,6 @@
  */
 public class Intro {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		System.out.println(coins(27));
-	}
-	
-	//returns 17
 	public int ret(){
 		/**
 		 * Returns 17
@@ -20,24 +13,24 @@ public class Intro {
 		return 17;
 	}
 	
-	public int logic(boolean a, boolean b, boolean c){
+	public boolean logic(boolean a, boolean b, boolean c){
 		/**
 		 * Returns true or false based on 3 booleans.
-		 * @param: boolean a, boolean b, boolean c
+		 * @param: a, b, c
 		 */
 		if(a&&b&&c){
-			return 1;
+			return true;
 		}
 		else{
-			return 0;
+			return false;
 		}
 		
 	}
 	
-	public static int stars(int n){
+	public String stars(int n){
 		/**
-		 * Returns a format of stars based on the input integer n.
-		 * @param: int n
+		 * Returns a format of stars with n rows and n stars per row (based on the input integer n).
+		 * @param: n
 		 */
 		for(int i=1; i<=n; i++){
 			for(int k=1; k<=i; k++){
@@ -45,15 +38,13 @@ public class Intro {
 			}
 			System.out.println("");
 			}
-		return 0;
+		return (String)null;
 	}
 	
-	public static String coins(int n){
+	public int coins(int n){
 		/**
-		 * Returns an amount in 5 cents and 2 cents based on the input.
-		 * For example: If the input is 27, this method will return "You can exchange 5 5-cents and 1 2-cents."
-		 * 
-		 * @param: int n
+		 * Returns an amount that can be exchanged in 5 cents and 2 cents based on the input.
+		 * @param: n
 		 * 
 		 */  
 		//His friend told him that he wanted to exchange for 5 cent and 2 cent coins.
@@ -62,33 +53,23 @@ public class Intro {
 
 		int fiveCents;
 		int twoCents;
-		int centsRemainder=n%5;
+		int fiveCount;
 		
-		if(n%5 == 0){
-			return "You can exchange " + n/5 + " 5-cents.";
-		}
-		else if(n%2==0){
-			return "You can exchange " + n/2 + " 2-cents.";
-		}
 		
-		else if(n<5 && n==2){
-			return "You can exchange " + 1 + "2-cents.";
-		}
-		
-		else if(n>5){
-			fiveCents=n/5;
-			centsRemainder=n%5;
-			
-			if(centsRemainder%2==0){
-				twoCents=centsRemainder/2;
-				return "You can exchange " + fiveCents + " 5-cents and " + twoCents + " 2-cents.";
-			}
-			else{
-				return "Sorry! You can not exchange cents.";
+		//loops through multiples of 5 within number
+		for(int multiple = n/5; multiple >=1 ;multiple--){
+			if((n-(5*multiple))%2==0){
+				twoCents = (n-(5*multiple))/2;
+				fiveCount= multiple;
+				return multiple + twoCents;
 			}
 		}
 		
-		return "Sorry! You can not exchange cents.";
+		if( n%2==0){
+			twoCents = n/2;
+			return twoCents;
+		}
+		return -1;
 		
 	}
 
