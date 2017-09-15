@@ -15,7 +15,7 @@ public class Biconditional extends LogicalSentence{
 	}
 	
 	public Boolean evaluate(TruthAssignment t){
-		return (left.evaluate(t)&& right.evaluate(t));
+		return (!left.evaluate(t)|| right.evaluate(t));
 		
 	}
 }

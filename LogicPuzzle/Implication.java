@@ -15,6 +15,6 @@ public class Implication extends LogicalSentence{
 	
 	public Boolean evaluate(TruthAssignment t){
 		
-		return left.evaluate(t) != right.evaluate(t);
+		return left.evaluate(t) == right.evaluate(t);
 	}
 }
