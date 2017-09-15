@@ -2,12 +2,12 @@ package SillyPhrase;
 
 public class ExOr extends LogicalSentence{
 	LogicalSentence left, right;
-	public void ExOr() {
+	public ExOr() {
 		// TODO Auto-generated constructor stub
 		
 	}
 	
-	public ExOr(LogicalSentence l1, LogicalSentence l2) {
+	public ExOr(LogicalSentence left, LogicalSentence right) {
 		// TODO Auto-generated constructor stub
 		this.left=left;
 		this.right = right;

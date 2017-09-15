@@ -1,5 +1,11 @@
 package SillyPhrase;
-
+/**
+ * Through a series of methods and objects, a sill phrase is passed into the program and a truth table is made 
+ * based on the assigned boolean values.
+ * 
+ * @author mickey
+ *
+ */
 public class SillyPhrase {
 	String combinator;
 	boolean basic;
@@ -7,6 +13,13 @@ public class SillyPhrase {
 	SillyPhrase lhv;
 	SillyPhrase rhv;
 	
+	
+	/**
+	 * The main method.
+	 * Constructs all objects and creates a truth table.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PropositionConstant a = new PropositionConstant("a");
@@ -15,41 +28,80 @@ public class SillyPhrase {
 		LogicalSentence l2 = new LogicalSentence(b);
 		LogicalSentence l3 = new Negation(l1);
 		LogicalSentence l4 = new Negation(l3);
-		LogicalSentence l5 =  new Conjunction(l3, new Negation(l4));
+		LogicalSentence l5 = new Conjunction(l3, new Negation(l4));
+		LogicalSentence l6 = new ExOr(l1,l2);
 
 		TruthAssignment ta1 = new TruthAssignment();
 		ta1.put(b,true);
 		ta1.put(a, false); 
-		//System.out.println(l5.evaluate(ta1));
-		System.out.println(legal("a&"));
-		System.out.println(findMatch("a(((b)))", 2));
-
-		String[] pc = {"p"};
-		truthTable(pc);
-		LogicalSentence l6 = new ExOr(l1,l2);
-
-	}
-	
-	private static void truthTable(String[] pc) {
-		// TODO Auto-generated method stub
 		
+		//EVALUATEEEEEEEEEE
+		System.out.println(l5.evaluate(ta1));
+		System.out.println(legal("a&"));
+		System.out.println(findMatch("a(b(a)", 0));
+
+		String[] pc = {"p","|","q"};
+		int variableCount= (pc.length/2)+1;
+		truthTable(pc,variableCount);
 	}
 
+	/**
+	 * Makes a truth table based on an array of strings.
+	 * @param pc
+	 */
+	private static void truthTable(String[] pc, int z) {
+		// TODO Auto-generated method stub
+		System.out.println(pc[0]+pc[1]+pc[2]+ "\t" + pc[0]+pc[2]);
+		for (int i = 0 ; i != (1<<z) ; i++) {
+		    String s = Integer.toBinaryString(i);
+		    while (s.length() != z) {
+		        s = '0'+s;
+		    }
+		    
+		    if(pc[1].equals("&")){
+		    	if(s.equals("11")){
+		    		System.out.print("T");
+		    	}else{
+		    		System.out.print("F");
+		    	}
+		    }
+		    
+		    else if(pc[1].equals("|")){
+		    	if(s.equals("00")){
+		    		System.out.print("F"+"\t");
+		    	}else{
+		    		System.out.print("T"+"\t");
+		    	}
+		    }
+		    
+		    System.out.println(s);
+		}
+
+	}
+
+	/**
+	 * Finds the substring within the innermost parentheses starting from the integer input (i).
+	 * Returns the rightmost character within the substring.
+	 * 
+	 * @param string
+	 * @param i
+	 * @return string
+	 */
 	private static int findMatch(String string, int i) {
 		// TODO Auto-generated method stub
-		String findParens = string.substring(i);
-		String middle = findParens.substring(findParens.indexOf(")")-1, findParens.indexOf(")"));
-		return findParens.indexOf(middle);
+		String inner = string.substring(i, string.length());
+		int lastParens = inner.indexOf(")");
+		int rightMost = string.indexOf(inner.substring(lastParens, lastParens+1));
+		return rightMost-1;
 	}
 	
-	private static boolean legal(String s) {
-		
-		//public static boolean legalSentence(String s){
-		/**
-		 * Checks to see if the input sentence is legal
-		 * 
-		*/
-			
+	/**
+	 * Checks to see if the input, or string, is a legal sentence or not.
+	 * 
+	 * @param s
+	 * @return boolean
+	 */
+	private static boolean legal(String s) {		
 		//p or q simple sentences
 		if(s.equals("")){
 			return true;
@@ -89,6 +141,14 @@ public class SillyPhrase {
 					
 	}
 	
+	
+	/**
+	 * Returns retval.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return value
+	 */
 	public static SillyPhrase xor(SillyPhrase a, SillyPhrase b){
 		SillyPhrase retval= new SillyPhrase();
 		retval.basic = false;

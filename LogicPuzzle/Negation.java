@@ -1,4 +1,10 @@
 package SillyPhrase;
+
+/**
+ * Negates a logical sentence and returns a boolean.
+ * @author mickey
+ *
+ */
 public class Negation extends LogicalSentence{
 	
 	LogicalSentence l1;

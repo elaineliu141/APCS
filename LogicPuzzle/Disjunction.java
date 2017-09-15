@@ -3,21 +3,21 @@ package SillyPhrase;
 public class Disjunction extends LogicalSentence{
 
 
-	LogicalSentence left, right;
-	public void Disjunction() {
+	LogicalSentence l1, r1;
+	public Disjunction() {
 		// TODO Auto-generated constructor stub
 		
 	}
 	
-	public Disjunction(LogicalSentence l1, LogicalSentence l2) {
+	public Disjunction(LogicalSentence l1, LogicalSentence r1) {
 		// TODO Auto-generated constructor stub
-		this.left=left;
-		this.right = right;
+		this.l1=l1;
+		this.r1 = r1;
 	}
 	
 	public Boolean evaluate(TruthAssignment t){
 		
-		if(left.evaluate(t)==false &&right.evaluate(t)==false){
+		if(l1.evaluate(t)==false && r1.evaluate(t)==false){
 			return false;
 		}
 		else{

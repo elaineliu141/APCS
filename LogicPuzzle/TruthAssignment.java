@@ -3,10 +3,11 @@ package SillyPhrase;
 import java.util.ArrayList;
 
 public class TruthAssignment {
-	ArrayList<PropositionConstant> propConstant = new ArrayList<PropositionConstant>();
-	ArrayList<Boolean> booleanVal = new ArrayList<Boolean>();
+	ArrayList<PropositionConstant> propConstant;
+	ArrayList<Boolean> booleanVal;
 	public TruthAssignment(){
-		
+		propConstant = new ArrayList<PropositionConstant>();
+		 booleanVal = new ArrayList<Boolean>();
 	}
 
 	public void put(PropositionConstant b, boolean c) {
@@ -14,7 +15,11 @@ public class TruthAssignment {
 		booleanVal.add(c);
 	}
 	
-	public boolean get(PropositionConstant a){
-		return booleanVal.get(0);
+	public ArrayList<PropositionConstant> getPropConstant(){
+		return propConstant;
+	}
+	
+	public ArrayList<Boolean> getBooleanVal(){
+		return booleanVal;
 	}
 }
