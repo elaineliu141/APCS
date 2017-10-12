@@ -12,89 +12,81 @@ import java.awt.image.ImageObserver;
 public class Face 
 {
 	public enum FaceType {Happy, Sad, Fence}
-	private static final ImageObserver ImageObserver = null;;
+	private static final ImageObserver ImageObserver = null;
 	public FaceType fType;
-	Color myOrange = new Color(255, 140, 0);
+	Color myOrange = new Color(255, 140, 0); //creates new color
 	public Arc2D.Double mouth;
-	public int xCoord; //Coordinates of top left corner of cell.
+	public int xCoord; //coordinates of top left
 	public int yCoord;
 	public int cellSize;
 	public double diameter;
 	public double radius; 
 	
-	//empty constructor
-	public Face(){
+	/**
+	 * empty constructor for face
+	 */
+	public Face() {
 	}
 	
 	/**
-	 * Positions the face according to the scale (cell size).
-	 * @param tehType
-	 * @param x
-	 * @param y
-	 * @param diam
+	 * positon of face according to scale
+	 * @param type type of face
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param diam diameter of face
 	 */
-	public Face(FaceType tehType, int x, int y, int diam)
-	{
+	public Face(FaceType type, int x, int y, int diam) {
 		xCoord = x;
 		yCoord = y;
 		radius = diameter / 2;
-		fType = tehType;
+		fType = type;
 	}
 	
 	/**
-	 * Uses Graphics2D to display the faces.
-	 * @param g2
+	 * uses graphics 2d to draw fences
+	 * @param g2 graphics
 	 */
-	public void paint(Graphics2D g2)
-	{
-		if (fType == FaceType.Fence)
-		{
+	public void paint(Graphics2D g2) {
+		if (fType == FaceType.Fence) {
 			fenceDraw(g2);
-		}
-		
-		else
-		{
+		} else {
 			otherDraw(g2);
 		}
 	}
 	
 	/**
-	 * Uses graphics 2D to paint the mhos.
+	 * uses graphics 2d to draw mhos
 	 * @param g2
 	 */
 	public void otherDraw(Graphics2D g2)
 	{
-		// Makes circle for head.
+		// circle for head
 		double xCircle = xCoord + 2;
 		double yCircle = yCoord + 2;
-		
 		Ellipse2D.Double head = new Ellipse2D.Double(xCircle, yCircle, (diameter - 4), (diameter - 4));
 		
-		//makes both eyes
+		//eyes
 		double xEye1 = xCircle + (diameter / 4);
 		double xEye2 = xCircle + (3 * diameter / 4);
 		double yEye = yCircle + (diameter / 4);
 	
-		//positions of the eyes
+		//positions of eyes
 		Rectangle2D.Double eye1 = new Rectangle2D.Double((xEye1 - 1), (yEye - 1), 2, 2);
 		Rectangle2D.Double eye2 = new Rectangle2D.Double((xEye2 - 1), (yEye - 1), 2, 2);
 		Rectangle2D.Double nose = new Rectangle2D.Double((xCoord + radius - 1), (yCoord + radius - 1), 2, 2);
 
 		g2.setColor(myOrange);
 		
-		//mouth set in a smiley face :)
-		if (fType == FaceType.Happy)
-		{
+		//mouth - happy
+		if (fType == FaceType.Happy) {
 			mouth = new Arc2D.Double(
 					(xCoord + (diameter / 4)),
 					(yCoord + (3 * diameter / 8)),
 					(diameter / 2),
 					(diameter / 2), 180, 180, 2);
 			g2.draw(head);
-		}
-		//else if not heppy -> sad (mouth set to unhappy face)
-		else
-		{
+		} else {
+			//mouth - sad
 			mouth = new Arc2D.Double(
 					(xCoord + (diameter / 4)),
 					(yCoord + (9 * diameter / 16)),
@@ -104,7 +96,7 @@ public class Face
 			g2.setColor(Color.BLACK);
 		}
 		
-		//draws the eyes, nose, mouth onto the circle
+		//draws eyes, mouth, nose onto circle
 		g2.fill(eye1);
 		g2.fill(eye2);
 		g2.fill(nose);
@@ -112,8 +104,8 @@ public class Face
 	}
 	
 	/**
-	 * Draws the electric fences (Graphics2D).
-	 * @param g2
+	 * draws fences
+	 * @param g2 graphics
 	 */
 	public void fenceDraw(Graphics2D g2)
 	{
@@ -129,7 +121,7 @@ public class Face
 		double[] lineYCoords = new double[4];
 		Line2D.Double[] horizlines = new Line2D.Double[4];
 		
-		//sets color
+		//sets color to orange
 		Color myOrange = new Color(255, 140, 0);
 		g2.setColor(myOrange);
 		

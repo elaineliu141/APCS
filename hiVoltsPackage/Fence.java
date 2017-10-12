@@ -2,33 +2,29 @@ package hiVoltsPackage;
 import java.awt.Point;
 
 
-public class Fence extends GamePiece
-{
+public class Fence extends GamePiece {
 	/**
-	 * Constructor with no parameters that calls the superclass "GamePiece".
+	 * constructor for fence, calls the superclass "GamePiece".
 	 */
-	public Fence()
-	{
+	public Fence() {
 		pType = PieceType.Mho;
 		setType();
 	}
 	
 	/**
-	 * A constructor that uses the superclass "GamePiece"'s method to create the fences.
-	 * @param p
-	 * @param diam
+	 * constructor that uses the superclass "GamePiece"'s method to create the fences
+	 * @param p point
+	 * @param diam diameter
 	 */
-	public Fence(Point p, int diam)
-	{
+	public Fence(Point p, int diam) {
 		pType = PieceType.Fence;
 		setType();
 		
-		cellSize = diam;
+		cellSize = diam; //sets scale to diameter
 		xGrid = (int) p.getX();
 		yGrid = (int) p.getY();
 		xCoord = cellSize * xGrid;
 		yCoord = cellSize * yGrid;
-			
 	}
 	
 }

@@ -12,21 +12,22 @@ import javax.swing.JButton;
 public class Background 
 {
 	/**
-	 * Empty Constructor.
+	 * constructor for Background
 	 */
-	public Background()
-	{}
+	public Background() {
+		
+	}
 	
-	public int cellSize;
+	public int cellSize; //scale for entire board
 	public Rectangle rect;
 	
-	//either win or lose (true or false)
+	//win or lose?
 	public boolean gameOver;
 	public boolean won;
 	
-	//win or lose messages
-	public String loseMessage = "GAME OVER!";
-	public String winMessage = "YOU WON!";
+	//win/lose messages
+	public String lose = "GAME OVER!";
+	public String win = "YOU WON!";
 	public int winMessageX;
 	public int winMessageY;
 	public int loseMessageX;
@@ -36,7 +37,7 @@ public class Background
 	public int quitButtonX;
 	public int quitButtonY;
 	
-	//public HiVoltsFrame frame;
+	//frame
 	public HiVoltsBoardComponent compo;
 	public JButton reset;
 	public JButton quit;
@@ -45,17 +46,13 @@ public class Background
 	public Font theFont;
 	
 	/**
-	 * Sets the background for the hiVolts Board.
-	 * @param diam
-	 * @param tehCompo
+	 * sets background
+	 * @param diam diameter of the smiley face
+	 * @param tehCompo composition
 	 */
-	public Background(int diam, HiVoltsBoardComponent tehCompo)
-	{
-		/**
-		 * Sizes for the win or lose messages.
-		 */
-		
-		cellSize = diam;
+	public Background(int diam, HiVoltsBoardComponent tehCompo) {
+		//win/lose message size
+		cellSize = diam; //sets scale to diameter
 		
 		loseMessageX = (int) (1.4 * cellSize);
 		loseMessageY = (int)(cellSize * 6);
@@ -70,7 +67,7 @@ public class Background
 		rect = new Rectangle(0, 0, 16 * cellSize, 14 * cellSize);
 		compo = tehCompo;
 		
-		//Reset messages "New Game" and "Quit"
+		//reset messages for "new game" and "quit"
 		reset = new JButton("New Game");
 		reset.setLocation(resetButtonX, resetButtonY);
 		reset.setSize(cellSize * 2, cellSize);
@@ -87,26 +84,24 @@ public class Background
 	}
 	
 	/**
-	 * Uses a boolean to determine win or lose.
-	 * @param setTo
+	 * determines if game is over
+	 * @param setTo stores boolean value; true if game is over
 	 */
-	public void setGameOver(boolean setTo)
-	{
+	public void setGameOver(boolean setTo) {
 		gameOver = setTo;
 	}
 	
 	/**
-	 * Uses a boolean to determine win or lose.
-	 * @param setTo
+	 * determines if won or lost
+	 * @param setTo stores boolean value; true if user won
 	 */
-	public void setWin(boolean setTo)
-	{
+	public void setWin(boolean setTo) {
 		won = true;
 	}
 	
 	/**
-	 * Returns the "Game Over!" boolean
-	 * @return
+	 * returns "game over"
+	 * @return "game over"
 	 */
 	public boolean getGameOver()
 	{
@@ -114,12 +109,12 @@ public class Background
 	}
 	
 	/**
-	 * Draws the main background.
-	 * @param g2
+	 * draws background
+	 * @param g2 graphics of background
 	 */
 	public void draw(Graphics2D g2)
 	{	
-		//Black background
+		//sets the bg color to black
 		g2.setColor(Color.BLACK);
 		g2.fill(rect);
 		
@@ -129,15 +124,15 @@ public class Background
 			g2.setFont(theFont);
 			if (won)
 			{
-				//Draws a Green string "You Won!"
+				//draws "you won" in green
 				g2.setColor(Color.GREEN);
-				g2.drawString(winMessage, winMessageX, winMessageY);
+				g2.drawString(win, winMessageX, winMessageY);
 			}
 			else
 			{
-				//Draws a Green string "You Lose!"
+				//draws "you lost" in red
 				g2.setColor(Color.RED);
-				g2.drawString(loseMessage, loseMessageX, loseMessageY);
+				g2.drawString(lose, loseMessageX, loseMessageY);
 			}
 			reset.setVisible(true);
 			quit.setVisible(true);
@@ -146,30 +141,28 @@ public class Background
 	}
 	
 	/**
-	 * Resets the game after winning or losing.
-	 * @author mickey
+	 * resets game after winning/losing
+	 * @author ashley
 	 *
 	 */
-	class resetListenerClass implements ActionListener
-	{	
+	class resetListenerClass implements ActionListener {	
 		public void actionPerformed(ActionEvent event)
 		{
-			gameOver = false;
-			won = false;
-			compo.resetBoard();
+			gameOver = false; //sets gameover to false
+			won = false; //sets win to false
+			compo.resetBoard(); //resets board
 		}
 	}
 	
 	/**
-	 * Quits the game from input of the "Quit" button
-	 * @author mickey
+	 * if quit button is pressed, quits game
+	 * @author ashley
 	 *
 	 */
-	class quitListenerClass implements ActionListener
-	{	
-		public void actionPerformed(ActionEvent event)
+	class quitListenerClass implements ActionListener {	
+		public void actionPerformed(ActionEvent event) //if quit button pressed
 		{
-			compo.quit();
+			compo.quit(); //quit game
 		}
 	}
 	
