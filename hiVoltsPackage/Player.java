@@ -5,6 +5,9 @@ import java.awt.*;
 public class Player extends GamePiece
 {
 
+	/**
+	 * Constructor with no parameters that calls the superclass "GamePiece".
+	 */
 	public Player()
 	{
 		pType = PieceType.Player;
@@ -12,6 +15,11 @@ public class Player extends GamePiece
 		
 	}
 	
+	/**
+	 * Constructor inheriting the methods of the superclass to display the player "emoji".
+	 * @param p
+	 * @param size
+	 */
 	public Player(Point p, int size)
 	{
 		pType = PieceType.Player;

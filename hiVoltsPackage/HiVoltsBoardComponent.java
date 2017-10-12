@@ -9,9 +9,45 @@ import javax.swing.JComponent;
 
 public class HiVoltsBoardComponent extends JComponent
 {
+	public int cellSize;
+	public HiVoltsFrame frame;
+	
+	//Number of mhos and fences.
+	public int originalMhos;
+	public int mhos;
+	public int fences;
+	public int borderFences;
+	
+	//Uses an array to create occupied or unoccupied spots for the random fences
+	public boolean[][] occupied = new boolean[12][12];
+	public Random gen = new Random();
+	public boolean userCanMove;
+	public Font theFont;
+	public String yourTurn = "Your turn.";
+	
+	//Creates the ArrayLists for the random assignment
+	public Background bckgrnd;
+	public ArrayList<Mho> mhoList;
+	public ArrayList<Fence> fenceList;
+	public ArrayList<Fence> borderFenceList = new ArrayList<Fence>();
+	public Player you;
+	
+	//Movement for the KeyListener
+	public enum Movement {Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight, Nowhere, Jump};
+	
+	public static final long serialVersionUID = 823;
+	
+	//empty constructor
 	public HiVoltsBoardComponent()
 	{}
 	
+	/**
+	 * Create all objects for the components on the board.
+	 * @param size
+	 * @param mhonum
+	 * @param fencenum
+	 * @param tehFrame
+	 */
 	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame tehFrame)
 	{
 		cellSize = size;
@@ -31,9 +67,11 @@ public class HiVoltsBoardComponent extends JComponent
 		
 		resetBoard();
 		
-		
 	}
 	
+	/**
+	 * Resets the board during start of game.
+	 */
 	public void resetBoard()
 	{
 		bckgrnd.reset.setVisible(false);
@@ -117,6 +155,9 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Set the array to all unoccupied (empty spaces that can be taken up).
+	 */
 	private void setAllUnoccupied()
 	{
 		for (int i = 0; i < 12; i++)
@@ -128,6 +169,9 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Set the array for inside fences to all unoccupied (empty spaces that can be taken up).
+	 */
 	private void setInternalUnoccupied()
 	{
 		for (int i = 1; i < 11; i++)
@@ -139,6 +183,9 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Changing the unoccupied to occupied when randomly distributing fences.
+	 */
 	private void updateOccupied()
 	{
 		setInternalUnoccupied();
@@ -157,6 +204,11 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Checks for a spot being occupied or not.
+	 * @param p
+	 * @return
+	 */
 	private boolean isOccupied(Point p)
 	{
 		return isOccupied((int) p.getX(), (int) p.getY());
@@ -167,6 +219,11 @@ public class HiVoltsBoardComponent extends JComponent
 		return occupied[x][y];
 	}
 	
+	/**
+	 * Determines if a game piece is a non player piece (fences, mhos).
+	 * @param w
+	 * @return
+	 */
 	private boolean isNonPlayerGamePiece(Point w)
 	{
 		return isNonPlayerGamePiece((int) w.getX(), (int) w.getY());
@@ -186,6 +243,11 @@ public class HiVoltsBoardComponent extends JComponent
 		return toReturn;
 	}
 	
+	
+	/**
+	 * Generates random point.
+	 * @return
+	 */
 	public Point randomPoint()
 	{
 		int nextX = gen.nextInt(10) + 1;
@@ -195,6 +257,10 @@ public class HiVoltsBoardComponent extends JComponent
 		return nextOcc;
 	}
 	
+	/**
+	 * Moves onto assigning a different random piece.
+	 * @return
+	 */
 	public Point nextEmptyRandom()
 	{
 		Point p = randomPoint();
@@ -212,6 +278,10 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Movement for a random jump.
+	 * @return
+	 */
 	public Point randomJump()
 	{
 		Point p = randomPoint();
@@ -229,6 +299,11 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Checks if the point assigned is already a fence.
+	 * @param p
+	 * @return
+	 */
 	public boolean fence(Point p)
 	{
 		return (!notFence(p));
@@ -239,9 +314,14 @@ public class HiVoltsBoardComponent extends JComponent
 		return (!notFence(x, y));
 	}
 	
+	/**
+	 * Checks if the point assigned is not a fence.
+	 * @param p
+	 * @return
+	 */
 	public boolean notFence(Point p)
 	{
-		return notFence((int )p.getX(), (int) p.getY());
+		return notFence((int)p.getX(), (int) p.getY());
 	}
 	
 	public boolean notFence(int x, int y)
@@ -259,6 +339,10 @@ public class HiVoltsBoardComponent extends JComponent
 		return toReturn;
 	}
 	
+	/**
+	 * Draws the mhos and fences.
+	 * @param g
+	 */
 	public void paintComponent(Graphics g)
 	{	
 		Graphics2D g2 = (Graphics2D) g;
@@ -301,6 +385,10 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Determine the input of the key (KeyListener).
+	 * @param move
+	 */
 	public void keyInput(Movement move)
 	{
 		if (userCanMove)
@@ -314,6 +402,10 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Uses if-else statements to determine the output of the faces.
+	 * @param move
+	 */
 	private void doKeyInput(Movement move)
 	{
 		Point oldLoc = you.getLocation();
@@ -415,6 +507,9 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Determines the motion for the mhos (adding and removing) after each turn. 
+	 */
 	private void nextTurn()
 	{	
 		ArrayList<Mho> newMhoList = new ArrayList<Mho>(); 
@@ -448,6 +543,10 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Determines the movement for the Mhos.
+	 * @param w
+	 */
 	private void moveMho(Mho w)
 	{
 		//Same row or column move.
@@ -517,6 +616,13 @@ public class HiVoltsBoardComponent extends JComponent
 		return (a.getX() == b.getX());
 	}
 	
+	/**
+	 * Movement for the mhos and faces.
+	 * @param pieceThatWillMove
+	 * @param referencePiece
+	 * @param row
+	 * @param column
+	 */
 	private void directMove(GamePiece pieceThatWillMove, GamePiece referencePiece, boolean row, boolean column)
 	{
 		//If same row, change x & change column number.
@@ -544,13 +650,24 @@ public class HiVoltsBoardComponent extends JComponent
 		pieceThatWillMove.setLocation(p);
 	}
 	
+	/**
+	 * Diagonal distance for the mhos.
+	 * @param thatMoves
+	 * @param reference
+	 * @return
+	 */
 	private boolean diagonal(GamePiece a, GamePiece b)
 	{
 		int dist1 = Math.abs((a.getX() - b.getX()));
 		int dist2 = Math.abs((a.getY() - b.getY()));
 		return (dist1 == dist2);
 	}
-
+	/**
+	 * Diagonal Movement for the mhos.
+	 * @param thatMoves
+	 * @param reference
+	 * @return
+	 */
 	private Point diagonalMoveLocation(GamePiece thatMoves, GamePiece reference)
 	{
 		int oldX = thatMoves.getX();
@@ -580,6 +697,12 @@ public class HiVoltsBoardComponent extends JComponent
 		return toReturn;
 	}
 
+	/**
+	 * Determines the horizontal Location and movement for the mhos
+	 * @param thatMoves
+	 * @param reference
+	 * @return
+	 */
 	private Point horizMoveLocation(GamePiece thatMoves, GamePiece reference)
 	{
 		int moveX = thatMoves.getX();
@@ -592,6 +715,12 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Determines the vertical Location and movement for the mhos
+	 * @param thatMoves
+	 * @param reference
+	 * @return
+	 */
 	private Point vertMoveLocation(GamePiece thatMoves, GamePiece reference)
 	{
 		int moveY = thatMoves.getY();
@@ -604,6 +733,12 @@ public class HiVoltsBoardComponent extends JComponent
 		
 	}
 	
+	/**
+	 * Moves the mhos closer to the face, the player.
+	 * @param numThatWillMove
+	 * @param otherNum
+	 * @return
+	 */
 	private int moveNumCloser(int numThatWillMove, int otherNum)
 	{
 		if (otherNum > numThatWillMove)
@@ -620,34 +755,14 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 	}
 	
+	/**
+	 * Quits the frame.
+	 */
 	public void quit()
 	{
 		frame.dispose();
 	}
 	
-	public int cellSize;
-	public HiVoltsFrame frame;
 	
-	//Number of mhos and fences.
-	public int originalMhos;
-	public int mhos;
-	public int fences;
-	public int borderFences;
-	
-	public boolean[][] occupied = new boolean[12][12];
-	public Random gen = new Random();
-	public boolean userCanMove;
-	public Font theFont;
-	public String yourTurn = "Your turn.";
-	
-	public Background bckgrnd;
-	public ArrayList<Mho> mhoList;
-	public ArrayList<Fence> fenceList;
-	public ArrayList<Fence> borderFenceList = new ArrayList<Fence>();
-	public Player you;
-	
-	public enum Movement {Left, Right, Up, Down, UpLeft, UpRight, DownLeft, DownRight, Nowhere, Jump};
-	
-	public static final long serialVersionUID = 823;
 	
 }

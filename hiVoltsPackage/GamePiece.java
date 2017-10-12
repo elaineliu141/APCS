@@ -5,10 +5,21 @@ import java.awt.Point;
 
 public class GamePiece extends Face
 {
+	public enum PieceType {Player, Mho, Fence};
+	public PieceType pType;
+	public int xGrid; //x coordinate of cell on grid.
+	public int yGrid; // y coordinate of etc.
+	
+	/**
+	 * GamePiece empty constructor used for inheritance.
+	 */
 	public GamePiece()
 	{
 	}
 	
+	/**
+	 * SetType method (inherited by other subclasses)
+	 */
 	public void setType()
 	{
 		if (pType == PieceType.Mho)
@@ -26,6 +37,11 @@ public class GamePiece extends Face
 		}
 	}
 	
+	/**
+	 * SetLocation a method that determines the location of the faces.
+	 * @param p
+	 */
+	
 	public void setLocation(Point p)
 	{
 		xGrid = (int) p.getX();
@@ -35,28 +51,49 @@ public class GamePiece extends Face
 		yCoord = yGrid * cellSize;
 	}
 	
+	/**
+	 * SetLocation with a determined x and y.
+	 * @param x
+	 * @param y
+	 */
 	public void setLocation(int x, int y)
 	{
 		Point p = new Point(x, y);
 		setLocation(p);
 	}
 	
+	/**
+	 * Returns the location of the faces.
+	 * @return
+	 */
 	public Point getLocation()
 	{
 		Point p = new Point(xGrid, yGrid);
 		return p;
 	}
 	
+	/**
+	 * Returns the X value of the location of the faces.
+	 * @return
+	 */
 	public int getX()
 	{
 		return xGrid;
 	}
 	
+	/**
+	 * Returns the Y value of the location of the faces.
+	 * @return
+	 */
 	public int getY()
 	{
 		return yGrid;
 	}
 	
+	/**
+	 * Sets the size of the faces.
+	 * @param size
+	 */
 	public void setSize(int size)
 	{
 		cellSize = size;
@@ -64,14 +101,13 @@ public class GamePiece extends Face
 		radius = cellSize / 2;
 	}
 	
+	/**
+	 * Activates the paint class.
+	 * @param g2
+	 */
 	public void draw(Graphics2D g2)
 	{
 		paint(g2);
 	}
 	
-	public enum PieceType {Player, Mho, Fence};
-	public PieceType pType;
-	public int xGrid; //x coordinate of cell on grid.
-	public int yGrid; // y coordinate of etc.
-
 }

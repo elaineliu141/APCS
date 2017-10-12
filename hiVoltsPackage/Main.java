@@ -1,15 +1,14 @@
 package hiVoltsPackage;
 
-import javax.swing.JOptionPane;
-
 public class Main
 {
 	public static void main(String[] args)
 	{
-		Integer fences = new Integer(JOptionPane.showInputDialog("How many fences would you like? (Usually 20)"));
-		Integer mhos = new Integer(JOptionPane.showInputDialog("How many mhos would you like? (Usually 12)"));
-
+		//Standard number of fences and mhos.
+		int fences = 20;
+		int mhos = 12;
 		
+		//Creates an object and inputs number of mhos and fences.
 		HiVoltsFrame hivolts = new HiVoltsFrame();
 		hivolts.setUp(mhos, fences);
 		hivolts.setVisible(true);

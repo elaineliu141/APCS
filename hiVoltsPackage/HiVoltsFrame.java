@@ -1,17 +1,25 @@
 package hiVoltsPackage;
 import javax.swing.JFrame;
 
-
-
 public class HiVoltsFrame extends JFrame 
 {
-	/**
-	 * Stupid.
-	 */
+	//implementation of MoveListener
 	private static final long serialVersionUID = 1L;
+	public MoveListener playerMover = new MoveListener();
+	public HiVoltsBoardComponent compo;
 	
+	//scale of the display
+	public static int cellSize = 56;
 	
+	//width and height for the frame
+	public static int FRAME_WIDTH = cellSize*16;
+	public static int FRAME_HEIGHT = cellSize*13;
 	
+	/**
+	 * Sets up the Background frame for the display
+	 * @param mhoNum
+	 * @param fenceNum
+	 */
 	public void setUp(int mhoNum, int fenceNum)
 	{	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -23,30 +31,25 @@ public class HiVoltsFrame extends JFrame
 		
 		this.setLayout(null);
 		
+		//proportion for the scaling of display (how big it shows on the screen)
 		compo.setLocation(0,0);
 		compo.setSize(cellSize * 16, cellSize * 14);
 		this.add(compo);
 		
 		playerMover.addHiVoltsBoardComponent(compo);
-		this.addKeyListener(playerMover); //!!
+		
+		//adds KeyListener!
+		this.addKeyListener(playerMover); 
 	}
 	
+	/**
+	 * Resets the Movement of the player at start.
+	 */
 	public void resetPlayerMover()
 	{
 		this.setVisible(false);
 		this.setVisible(true);
 		this.addKeyListener(playerMover);
 	}
-	
-
-	
-	
-	public MoveListener playerMover = new MoveListener();
-	public HiVoltsBoardComponent compo;
-	public static int FRAME_WIDTH = 1024;
-	public static int FRAME_HEIGHT = 720;
-	public int cellSize = 56;
-	
-	
 	
 }
