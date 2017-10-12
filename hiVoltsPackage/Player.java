@@ -17,8 +17,8 @@ public class Player extends GamePiece
 	
 	/**
 	 * Constructor inheriting the methods of the superclass to display the player "emoji".
-	 * @param p
-	 * @param size
+	 * @param p position of the player
+	 * @param size size in proportion to cell size, or scale
 	 */
 	public Player(Point p, int size)
 	{
@@ -30,6 +30,7 @@ public class Player extends GamePiece
 		diameter = cellSize;
 		radius = cellSize / 2;
 		
+		//X and Y Location of the player
 		xGrid = (int) p.getX();
 		yGrid = (int) p.getY();
 		

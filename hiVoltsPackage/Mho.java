@@ -15,8 +15,8 @@ public class Mho extends GamePiece
 	
 	/**
 	 * Positions the face according to the scale (cell size), which is inherited.
-	 * @param p
-	 * @param size
+	 * @param p  the position of the mho
+	 * @param size  the designed size for the mho according to cell size, or scale
 	 */
 	public Mho(Point p, int size)
 	{

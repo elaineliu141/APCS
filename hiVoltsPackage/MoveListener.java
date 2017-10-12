@@ -15,7 +15,7 @@ class MoveListener implements KeyListener
 	
 	/**
 	 * Adds the Components of the Board into the Listener.
-	 * @param tehCompo
+	 * @param tehCompo object created from HivoltsBoardComponent
 	 */
 	public void addHiVoltsBoardComponent(HiVoltsBoardComponent tehCompo)
 	{
@@ -24,6 +24,7 @@ class MoveListener implements KeyListener
 	
 	/**
 	 * Determines the input of the KeyListener.
+	 * @param event which key was pressed
 	 */
 	public void keyPressed(KeyEvent event)
 	{
@@ -38,7 +39,7 @@ class MoveListener implements KeyListener
 	
 	/**
 	 * Determines the key typed and produces the output.
-	 * @param event
+	 * @param event which key pressed and code output
 	 */
 	public void keyReleased(KeyEvent event)
 	{	
@@ -50,7 +51,7 @@ class MoveListener implements KeyListener
 	
 	/**
 	 * Determines the key typed and produces the output.
-	 * @param event
+	 * @param event which key was typed
 	 */
 	public void keyTyped(KeyEvent event)
 	{
