@@ -5,7 +5,7 @@ import java.awt.*;
 public class Mho extends GamePiece
 {
 	/**
-	 * Determines the type of gamepiece, a parent class (mho).
+	 * Sets the type of gamepiece, a parent class.
 	 */
 	public Mho()
 	{
@@ -14,7 +14,7 @@ public class Mho extends GamePiece
 	}
 	
 	/**
-	 * Positions the face according to the scale (cell size).
+	 * Positions the face according to the scale (cell size), which is inherited.
 	 * @param p
 	 * @param size
 	 */
@@ -23,6 +23,7 @@ public class Mho extends GamePiece
 		pType = PieceType.Mho;
 		setType();
 		
+		//Size (radius) of the face
 		cellSize = size;
 		diameter = cellSize;
 		radius = diameter / 2;

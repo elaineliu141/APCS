@@ -3,9 +3,16 @@ package hiVoltsPackage;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//KeyListener for keyboard input.
+//KeyListener for keyboard input
 class MoveListener implements KeyListener
 {
+	public int code;
+	public boolean released = true;
+	public HiVoltsBoardComponent compo;
+	
+	//Different Keys for Movement (implementation)
+	public HiVoltsBoardComponent.Movement[] direction = new HiVoltsBoardComponent.Movement[156];
+	
 	/**
 	 * Adds the Components of the Board into the Listener.
 	 * @param tehCompo
@@ -20,6 +27,7 @@ class MoveListener implements KeyListener
 	 */
 	public void keyPressed(KeyEvent event)
 	{
+		//Which key was pressed
 		if (released)
 		{
 			code = event.getKeyCode();
@@ -28,6 +36,10 @@ class MoveListener implements KeyListener
 		}
 	}
 	
+	/**
+	 * Determines the key typed and produces the output.
+	 * @param event
+	 */
 	public void keyReleased(KeyEvent event)
 	{	
 		if ((event.getKeyCode() == code) && (code < direction.length))
@@ -44,12 +56,6 @@ class MoveListener implements KeyListener
 	{
 		
 	}
-
-	public int code;
-	public boolean released = true;
-	public HiVoltsBoardComponent compo;
-	public HiVoltsBoardComponent.Movement[] direction = new HiVoltsBoardComponent.Movement[156];
-	
 	// Sets up array with movements, etc.
 	{	
 		//Arrow keys (Up, Down, Left, Right).
@@ -58,7 +64,7 @@ class MoveListener implements KeyListener
 		direction[38] = HiVoltsBoardComponent.Movement.Up;
 		direction[40] = HiVoltsBoardComponent.Movement.Down;
 		
-		//Letters for movement.
+		//Letters for movement (J etc).
 		direction[81] = HiVoltsBoardComponent.Movement.UpLeft;
 		direction[87] = HiVoltsBoardComponent.Movement.Up;
 		direction[69] = HiVoltsBoardComponent.Movement.UpRight;

@@ -25,6 +25,7 @@ public class Player extends GamePiece
 		pType = PieceType.Player;
 		setType();
 		
+		//Size of Smiley Face
 		cellSize = size;
 		diameter = cellSize;
 		radius = cellSize / 2;
@@ -34,7 +35,6 @@ public class Player extends GamePiece
 		
 		xCoord = xGrid * cellSize;
 		yCoord = yGrid * cellSize;
-		
 	}
 	
 }
