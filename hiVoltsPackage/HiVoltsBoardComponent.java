@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
 
-public class HiVoltsBoardComponent extends JComponent
-{
+public class HiVoltsBoardComponent extends JComponent {
+	
 	public int cellSize;
 	public HiVoltsFrame frame;
 	
@@ -38,18 +38,19 @@ public class HiVoltsBoardComponent extends JComponent
 	public static final long serialVersionUID = 823;
 	
 	//empty constructor
-	public HiVoltsBoardComponent()
-	{}
+	public HiVoltsBoardComponent() {
+		
+	}
 	
 	/**
 	 * Create all objects for the components on the board.
-	 * @param size
-	 * @param mhonum
-	 * @param fencenum
-	 * @param tehFrame
+	 * @param size is cell size
+	 * @param mhonum is number or Mhos
+	 * @param fencenum is number of faces
+	 * @param tehFrame is the frame of the game
 	 */
-	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame tehFrame)
-	{
+	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame tehFrame) {
+		
 		cellSize = size;
 		theFont = new Font("theFont", 1, (cellSize / 2));
 		frame = tehFrame;
@@ -72,8 +73,8 @@ public class HiVoltsBoardComponent extends JComponent
 	/**
 	 * Resets the board during start of game.
 	 */
-	public void resetBoard()
-	{
+	public void resetBoard() {
+		
 		bckgrnd.reset.setVisible(false);
 		bckgrnd.quit.setVisible(false);
 		this.remove(bckgrnd.reset);
@@ -89,10 +90,8 @@ public class HiVoltsBoardComponent extends JComponent
 		//Sets cells to unoccupied.
 		setAllUnoccupied();
 		
-		
 		//Gives mhos locations & sets locations to occupied.
-		for (int mhoDex = 0; mhoDex <= (mhos - 1); mhoDex++)
-		{
+		for (int mhoDex = 0; mhoDex <= (mhos - 1); mhoDex++) {
 			Point mhoPoint = nextEmptyRandom();
 			Mho aMho = new Mho(mhoPoint, cellSize);
 			mhoList.add(aMho);
@@ -100,8 +99,7 @@ public class HiVoltsBoardComponent extends JComponent
 		}
 		
 		//Gives inner fences locations & sets locations to occupied.
-		for (int fenceDex = 0; fenceDex <= (fences - 1); fenceDex++)
-		{
+		for (int fenceDex = 0; fenceDex <= (fences - 1); fenceDex++) {
 			Point fencePoint = nextEmptyRandom();
 			Fence aFence = new Fence(fencePoint, cellSize);
 			fenceList.add(aFence);
@@ -113,8 +111,7 @@ public class HiVoltsBoardComponent extends JComponent
 		Point borderFencePoint;
 		
 		//Top & Bottom Fences
-		for (int xDex = 0; xDex <= 11; xDex++)
-		{
+		for (int xDex = 0; xDex <= 11; xDex++) {
 			borderFencePoint = new Point(xDex, 0);
 			Fence aFence = new Fence(borderFencePoint, cellSize);
 			borderFenceList.add(borderFenceDex, aFence);
@@ -128,10 +125,8 @@ public class HiVoltsBoardComponent extends JComponent
 			borderFenceDex++;
 		}
 		
-		
 		//Left & Right Fences
-		for (int yDex = 1; yDex <= 10; yDex++)
-		{
+		for (int yDex = 1; yDex <= 10; yDex++) {
 			borderFencePoint = new Point(0, yDex);
 			Fence aFence = new Fence(borderFencePoint, cellSize);
 			borderFenceList.add(borderFenceDex, aFence);
@@ -158,12 +153,9 @@ public class HiVoltsBoardComponent extends JComponent
 	/**
 	 * Set the array to all unoccupied (empty spaces that can be taken up).
 	 */
-	private void setAllUnoccupied()
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			for (int j = 0; j < 12; j++)
-			{
+	private void setAllUnoccupied() {
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 12; j++) {
 				occupied[i][j] = false;
 			}
 		}
@@ -172,12 +164,9 @@ public class HiVoltsBoardComponent extends JComponent
 	/**
 	 * Set the array for inside fences to all unoccupied (empty spaces that can be taken up).
 	 */
-	private void setInternalUnoccupied()
-	{
-		for (int i = 1; i < 11; i++)
-		{
-			for (int j = 1; j < 11; j++)
-			{
+	private void setInternalUnoccupied() {
+		for (int i = 1; i < 11; i++) {
+			for (int j = 1; j < 11; j++) {
 				occupied[i][j] = false;
 			}
 		}
@@ -186,70 +175,60 @@ public class HiVoltsBoardComponent extends JComponent
 	/**
 	 * Changing the unoccupied to occupied when randomly distributing fences.
 	 */
-	private void updateOccupied()
-	{
+	private void updateOccupied() {
 		setInternalUnoccupied();
 		
-		for (Mho m : mhoList)
-		{
+		for (Mho m : mhoList) {
 			occupied[m.getX()][m.getY()] = true;
-		}
-		
-		for (Fence f : fenceList)
-		{
+		} for (Fence f : fenceList) {
 			occupied[f.getX()][f.getY()] = true;
 		}
-		
 		occupied[you.getX()][you.getY()] = true;
-		
 	}
 	
 	/**
 	 * Checks for a spot being occupied or not.
-	 * @param p
+	 * @param p is position
 	 * @return
 	 */
-	private boolean isOccupied(Point p)
-	{
+	private boolean isOccupied(Point p) {
 		return isOccupied((int) p.getX(), (int) p.getY());
 	}
 	
-	private boolean isOccupied(int x, int y)
-	{
+	private boolean isOccupied(int x, int y) {
 		return occupied[x][y];
 	}
 	
 	/**
 	 * Determines if a game piece is a non player piece (fences, mhos).
-	 * @param w
+	 * @param w is position of the nonplayer piece
 	 * @return
 	 */
-	private boolean isNonPlayerGamePiece(Point w)
-	{
+	private boolean isNonPlayerGamePiece(Point w) {
 		return isNonPlayerGamePiece((int) w.getX(), (int) w.getY());
 	}
 	
-	private boolean isNonPlayerGamePiece(int x, int y)
-	{
+	/**
+	 * prevents repeated randomized locations
+	 * @param x is x coord
+	 * @param y is y coord
+	 * @return
+	 */
+	private boolean isNonPlayerGamePiece(int x, int y) {
 		boolean toReturn = false;
 		
 		Point p = new Point(x,y);
 		
-		if (isOccupied(p) && (!you.getLocation().equals(p)))
-		{
+		if (isOccupied(p) && (!you.getLocation().equals(p))) {
 			toReturn = true;
-		}
-		
-		return toReturn;
+		} return toReturn;
 	}
-	
 	
 	/**
 	 * Generates random point.
 	 * @return
 	 */
-	public Point randomPoint()
-	{
+	public Point randomPoint() {
 		int nextX = gen.nextInt(10) + 1;
 		int nextY = gen.nextInt(10) + 1;
 		
@@ -261,19 +240,15 @@ public class HiVoltsBoardComponent extends JComponent
 	 * Moves onto assigning a different random piece.
 	 * @return
 	 */
-	public Point nextEmptyRandom()
-	{
+	public Point nextEmptyRandom() {
 		Point p = randomPoint();
 		
 		int nextX = (int) p.getX();
 		int nextY = (int) p.getY();
 		
-		if(occupied[nextX][nextY])
-		{
+		if(occupied[nextX][nextY]) {
 			return nextEmptyRandom();
-		}
-		else
-		{
+		} else {
 			return p;
 		}
 	}
@@ -282,102 +257,90 @@ public class HiVoltsBoardComponent extends JComponent
 	 * Movement for a random jump.
 	 * @return
 	 */
-	public Point randomJump()
-	{
+	public Point randomJump() {
 		Point p = randomPoint();
 		
 		int nextX = (int) p.getX();
 		int nextY = (int) p.getY();
 		
-		if(notFence(nextX, nextY))
-		{
+		if(notFence(nextX, nextY)) {
 			return p;
-		}
-		else
-		{
+		} else {
 			return randomJump();
 		}
 	}
 	
 	/**
 	 * Checks if the point assigned is already a fence.
-	 * @param p
+	 * @param p is position
 	 * @return
 	 */
-	public boolean fence(Point p)
-	{
+	public boolean fence(Point p) {
 		return (!notFence(p));
 	}
 
-	public boolean fence(int x, int y)
-	{
+	public boolean fence(int x, int y) {
 		return (!notFence(x, y));
 	}
 	
 	/**
 	 * Checks if the point assigned is not a fence.
-	 * @param p
+	 * @param p is position
 	 * @return
 	 */
-	public boolean notFence(Point p)
-	{
+	public boolean notFence(Point p) {
 		return notFence((int)p.getX(), (int) p.getY());
 	}
 	
-	public boolean notFence(int x, int y)
-	{
+	/**
+	 * checks if a coordinate is not a fence
+	 * @param x coord
+	 * @param y coord
+	 * @return
+	 */
+	public boolean notFence(int x, int y) {
 		boolean toReturn = true;
 		
-		for(Fence f : fenceList)
-		{
-			if ((f.getX() == x) && (f.getY() == y))
-			{
+		for(Fence f : fenceList) {
+			if ((f.getX() == x) && (f.getY() == y)) {
 				toReturn = false;
 				break;
 			}
-		}
-		return toReturn;
+		} return toReturn;
 	}
 	
 	/**
 	 * Draws the mhos and fences.
-	 * @param g
+	 * @param g allows for graphics
 	 */
-	public void paintComponent(Graphics g)
-	{	
+	public void paintComponent(Graphics g) {	
 		Graphics2D g2 = (Graphics2D) g;
 		
 		bckgrnd.draw(g2);
 		
-		for (int i = 0; i <= (mhos - 1); i++)
-		{
+		for (int i = 0; i <= (mhos - 1); i++) {
 			Mho mo = mhoList.get(i);
 			mo.draw(g2);
 		}
 		
-		
-		for (int j = 0; j <= (fences - 1); j++)
-		{
+		for (int j = 0; j <= (fences - 1); j++) {
 			Fence phence = fenceList.get(j);
 			phence.draw(g2);
 		}
 		
-		for (int k = 0; k <= 43; k++)
-		{
+		for (int k = 0; k <= 43; k++) {
 			Fence phence = borderFenceList.get(k);
 			phence.draw(g2);
 		}
 		
 		you.draw(g2);
 		
-		if (userCanMove)
-		{
+		if (userCanMove) {
 			g2.setFont(theFont);
 			g2.drawString(yourTurn, (int) (12.5 * cellSize), (2 * cellSize));
 		}
 		
-		if (bckgrnd.getGameOver())
-		{
+		if (bckgrnd.getGameOver()) {
 			add(bckgrnd.reset);
 			add(bckgrnd.quit);
 			bckgrnd.draw(g2);
@@ -387,27 +350,21 @@ public class HiVoltsBoardComponent extends JComponent
 	
 	/**
 	 * Determine the input of the key (KeyListener).
-	 * @param move
+	 * @param move is the direction moved
 	 */
-	public void keyInput(Movement move)
-	{
-		if (userCanMove)
-		{
-			if (move != Movement.Jump)
-			{
+	public void keyInput(Movement move) {
+		if (userCanMove) {
+			if (move != Movement.Jump) {
 				userCanMove = false;
-			}
-			doKeyInput(move);
-		}
-		
+			} doKeyInput(move);
+		}	
 	}
 	
 	/**
 	 * Uses if-else statements to determine the output of the faces.
-	 * @param move
+	 * @param move is the direction moved
 	 */
-	private void doKeyInput(Movement move)
-	{
+	private void doKeyInput(Movement move) {
 		Point oldLoc = you.getLocation();
 		int oldX = (int) oldLoc.getX();
 		int oldY = (int) oldLoc.getY();
@@ -415,72 +372,45 @@ public class HiVoltsBoardComponent extends JComponent
 		int newY = oldY;
 		Point newLoc = oldLoc;
 		
-		
-		if (move == Movement.Left)
-		{
+		if (move == Movement.Left) {
 			newX = (oldX - 1);
 			newY = oldY;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.Right)
-		{
+		} else if (move == Movement.Right) {
 			newX = (oldX + 1);
 			newY = oldY;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.Up)
-		{
+		} else if (move == Movement.Up) {
 			newX = oldX;
 			newY = (oldY - 1);
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.Down)
-		{
+		} else if (move == Movement.Down) {
 			newX = oldX;
 			newY = (oldY + 1);
 			newLoc.setLocation(newX, newY);
-		}
-
-		else if (move == Movement.UpLeft)
-		{
+		} else if (move == Movement.UpLeft) {
 			newX = oldX - 1;
 			newY = oldY - 1;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.UpRight)
-		{
+		} else if (move == Movement.UpRight) {
 			newX = oldX + 1;
 			newY = oldY - 1;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.DownLeft)
-		{
+		} else if (move == Movement.DownLeft) {
 			newX = oldX - 1;
 			newY = oldY + 1;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.DownRight)
-		{
+		} else if (move == Movement.DownRight) {
 			newX = oldX + 1;
 			newY = oldY + 1;
 			newLoc.setLocation(newX, newY);
-		}
-		
-		else if (move == Movement.Jump)
-		{
+		} else if (move == Movement.Jump) {
 			newLoc = randomJump();
 			newX = (int) newLoc.getX();
 			newY = (int) newLoc.getY();
 		}
 		
-		if (move != Movement.Nowhere)
-		{
+		if (move != Movement.Nowhere) {
 			occupied[oldX][oldY] = false;
 		}
 		
@@ -488,44 +418,32 @@ public class HiVoltsBoardComponent extends JComponent
 		
 		repaint();
 		
-		if (occupied[newX][newY] && (move != Movement.Nowhere))
-		{
+		if (occupied[newX][newY] && (move != Movement.Nowhere)) {
 			bckgrnd.setGameOver(true);
 			//DO COOL THING!
-		}
-		
-		else
-		{
+		} else {
 			occupied[newX][newY] = true;
 			repaint();
 			
-			if (move != Movement.Jump)
-			{
+			if (move != Movement.Jump) {
 				nextTurn();
 			}
 		}
-		
 	}
 	
 	/**
 	 * Determines the motion for the mhos (adding and removing) after each turn. 
 	 */
-	private void nextTurn()
-	{	
+	private void nextTurn() {	
 		ArrayList<Mho> newMhoList = new ArrayList<Mho>(); 
 		
-		if (!bckgrnd.getGameOver())
-		{
-			for (Mho y : mhoList)
-			{
+		if (!bckgrnd.getGameOver()) {
+			for (Mho y : mhoList) {
 				Mho newMho = y;
-				
 				moveMho(newMho);
-				
 				newMhoList.add(newMho);
 				
-				if (fence(newMho.getLocation()))
-				{
+				if (fence(newMho.getLocation())) {
 					newMhoList.remove(newMho);
 				}
 			}
@@ -535,8 +453,7 @@ public class HiVoltsBoardComponent extends JComponent
 		userCanMove = true;
 		updateOccupied();
 		
-		if(mhos == 0)
-		{
+		if (mhos == 0) {
 			bckgrnd.setWin(true);
 			bckgrnd.setGameOver(true);
 			repaint();
@@ -545,108 +462,99 @@ public class HiVoltsBoardComponent extends JComponent
 	
 	/**
 	 * Determines the movement for the Mhos.
-	 * @param w
+	 * @param w is position of mho
 	 */
-	private void moveMho(Mho w)
-	{
+	private void moveMho(Mho w) {
 		//Same row or column move.
 		boolean sameRow = sameRow(w, you);
 		boolean sameColumn = sameColumn(w, you);
 	
-		if (sameRow || sameColumn)
-		{
+		if (sameRow || sameColumn) {
 			directMove(w, you, sameRow, sameColumn);
 		}
 		
 		//Diagonal move.
-		else if (diagonal(w, you) && (!isNonPlayerGamePiece(diagonalMoveLocation(w, you))))
-		{
-			w.setLocation(diagonalMoveLocation(w, you));
-			
+		else if (diagonal(w, you) && (!isNonPlayerGamePiece(diagonalMoveLocation(w, you)))) {
+			w.setLocation(diagonalMoveLocation(w, you));		
 		}
 		
 		//Horizontal move.
-		else if ((horizGreaterThanVert(w, you)) && (!isNonPlayerGamePiece(horizMoveLocation(w, you))))
-		{
+		else if ((horizGreaterThanVert(w, you)) && (!isNonPlayerGamePiece(horizMoveLocation(w, you)))) {
 			w.setLocation(horizMoveLocation(w, you));
 		}
 		
 		//Vertical move.
-		else if ((!(horizGreaterThanVert(w, you))) && (!isNonPlayerGamePiece(horizMoveLocation(w, you))))
-		{
+		else if ((!(horizGreaterThanVert(w, you))) && (!isNonPlayerGamePiece(horizMoveLocation(w, you)))) {
 			w.setLocation(vertMoveLocation(w, you));
 		}
 		
 		//Diagonal move to fence.
-		else if (diagonal(w, you) && (!notFence(diagonalMoveLocation(w, you))))
-		{
-			w.setLocation(diagonalMoveLocation(w, you));
-			
+		else if (diagonal(w, you) && (!notFence(diagonalMoveLocation(w, you)))) {
+			w.setLocation(diagonalMoveLocation(w, you));	
 		}
 		
 		//Horizontal move to fence.
-		else if ((horizGreaterThanVert(w, you)) && (!notFence(horizMoveLocation(w, you))))
-		{
+		else if ((horizGreaterThanVert(w, you)) && (!notFence(horizMoveLocation(w, you)))) {
 			w.setLocation(horizMoveLocation(w, you));
 		}
 		
 		//Vertical move to fence.
-		else if ((!(horizGreaterThanVert(w, you))) && (!notFence(horizMoveLocation(w, you))))
-		{
+		else if ((!(horizGreaterThanVert(w, you))) && (!notFence(horizMoveLocation(w, you)))) {
 			w.setLocation(vertMoveLocation(w, you));
 		}
 		
-		
 		Point newLocation = w.getLocation();
 		
-		if (newLocation.equals(you.getLocation()))
-		{
+		if (newLocation.equals(you.getLocation())) {
 			bckgrnd.setGameOver(true);
 			repaint();
 		}
 	}
 	
-	private boolean sameRow(GamePiece a, GamePiece b)
-	{
+	/**
+	 * determines if two game pieces are in the same row
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	private boolean sameRow(GamePiece a, GamePiece b) {
 		return (a.getY() == b.getY());
 	}
 	
-	private boolean sameColumn(GamePiece a, GamePiece b)
-	{
+	/**
+	 * determines if two game pieces are in the same column
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	private boolean sameColumn(GamePiece a, GamePiece b) {
 		return (a.getX() == b.getX());
 	}
 	
 	/**
 	 * Movement for the mhos and faces.
-	 * @param pieceThatWillMove
-	 * @param referencePiece
+	 * @param pieceThatWillMove is the mho that will move
+	 * @param referencePiece is a piece that will not move, such as a fence
 	 * @param row
 	 * @param column
 	 */
-	private void directMove(GamePiece pieceThatWillMove, GamePiece referencePiece, boolean row, boolean column)
-	{
+	private void directMove(GamePiece pieceThatWillMove, GamePiece referencePiece, boolean row, boolean column) {
 		//If same row, change x & change column number.
 		//If same column, change y & change row number.
 		
-		Point r = referencePiece.getLocation();
-		
+		Point r = referencePiece.getLocation();		
 		Point p = pieceThatWillMove.getLocation();
 		
 		int newCol = (int) p.getX();
 		int newRow = (int) p.getY();
 		
-		if (row)
-		{
+		if (row) {
 			newCol = moveNumCloser(newCol, (int) r.getX());
-		}
-		
-		if (column)
-		{
+		} if (column) {
 			newRow = moveNumCloser(newRow, (int) r.getY());
 		}
 		
 		p = new Point(newCol, newRow);
-		
 		pieceThatWillMove.setLocation(p);
 	}
 	
@@ -656,20 +564,19 @@ public class HiVoltsBoardComponent extends JComponent
 	 * @param reference
 	 * @return
 	 */
-	private boolean diagonal(GamePiece a, GamePiece b)
-	{
+	private boolean diagonal(GamePiece a, GamePiece b) {
 		int dist1 = Math.abs((a.getX() - b.getX()));
 		int dist2 = Math.abs((a.getY() - b.getY()));
 		return (dist1 == dist2);
 	}
+	
 	/**
 	 * Diagonal Movement for the mhos.
 	 * @param thatMoves
 	 * @param reference
 	 * @return
 	 */
-	private Point diagonalMoveLocation(GamePiece thatMoves, GamePiece reference)
-	{
+	private Point diagonalMoveLocation(GamePiece thatMoves, GamePiece reference) {
 		int oldX = thatMoves.getX();
 		int oldY = thatMoves.getY();
 		
@@ -683,74 +590,64 @@ public class HiVoltsBoardComponent extends JComponent
 		return igger;
 	}
 	
-	private boolean horizGreaterThanVert(GamePiece a, GamePiece b)
-	{
+	/**
+	 * determines if the horizontal distance between the player and the mho is greater than the vertical
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	private boolean horizGreaterThanVert(GamePiece a, GamePiece b) {
 		boolean toReturn = false;
 		int horiz = Math.abs((a.getX() - b.getX()));
 		int vert = Math.abs((a.getY() - b.getY()));
 		
-		if (horiz > vert)
-		{
+		if (horiz > vert) {
 			toReturn = true;
-		}
-		
-		return toReturn;
+		} return toReturn;
 	}
 
 	/**
 	 * Determines the horizontal Location and movement for the mhos
-	 * @param thatMoves
-	 * @param reference
+	 * @param thatMoves is the moving piece
+	 * @param reference does not move
 	 * @return
 	 */
-	private Point horizMoveLocation(GamePiece thatMoves, GamePiece reference)
-	{
+	private Point horizMoveLocation(GamePiece thatMoves, GamePiece reference) {
 		int moveX = thatMoves.getX();
 		int refX = reference.getX();
 		int newX = moveNumCloser(moveX, refX);
 		
 		Point p = new Point(newX, thatMoves.getY());
-		
 		return p;
-		
 	}
 	
 	/**
 	 * Determines the vertical Location and movement for the mhos
-	 * @param thatMoves
-	 * @param reference
+	 * @param thatMoves is the moving piece
+	 * @param reference does not move
 	 * @return
 	 */
-	private Point vertMoveLocation(GamePiece thatMoves, GamePiece reference)
-	{
+	private Point vertMoveLocation(GamePiece thatMoves, GamePiece reference) {
 		int moveY = thatMoves.getY();
 		int refY = reference.getY();
 		int newY = moveNumCloser(moveY, refY);
 		
 		Point p = new Point(thatMoves.getX(), newY);
-		
 		return p;
-		
 	}
 	
 	/**
 	 * Moves the mhos closer to the face, the player.
-	 * @param numThatWillMove
-	 * @param otherNum
+	 * @param numThatWillMove is spaces the mho moves
+	 * @param otherNum is distance from the player
 	 * @return
 	 */
-	private int moveNumCloser(int numThatWillMove, int otherNum)
-	{
-		if (otherNum > numThatWillMove)
-		{
+	private int moveNumCloser(int numThatWillMove, int otherNum) {
+		if (otherNum > numThatWillMove) {
 			return (numThatWillMove + 1);
-		}
-		if (otherNum < numThatWillMove)
-		{
+		} if (otherNum < numThatWillMove) {
 			return (numThatWillMove - 1);
-		}
-		else 
-		{
+		} else {
 			return otherNum;
 		}
 	}
@@ -758,11 +655,8 @@ public class HiVoltsBoardComponent extends JComponent
 	/**
 	 * Quits the frame.
 	 */
-	public void quit()
-	{
+	public void quit() {
 		frame.dispose();
 	}
-	
-	
 	
 }
