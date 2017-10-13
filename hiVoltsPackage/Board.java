@@ -47,13 +47,17 @@ public class Board extends JComponent {
 	 * @param size is cell size
 	 * @param mhonum is number or Mhos
 	 * @param fencenum is number of faces
-	 * @param tehFrame is the frame of the game
+	 * @param Frame is the frame of the game
 	 */
+<<<<<<< HEAD:hiVoltsPackage/Board.java
 	public Board(int size, int mhonum, int fencenum, Frame tehFrame) {
+=======
+	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame Frame) {
+>>>>>>> 2deb6d1cefe04359c9070702f373e2be0887cabe:hiVoltsPackage/HiVoltsBoardComponent.java
 		
 		cellSize = size;
 		theFont = new Font("theFont", 1, (cellSize / 2));
-		frame = tehFrame;
+		frame = Frame;
 		
 		//Creates background.
 		bckgrnd = new Background(cellSize, this);
@@ -91,7 +95,7 @@ public class Board extends JComponent {
 		setAllUnoccupied();
 		
 		//Gives mhos locations & sets locations to occupied.
-		for (int mhoIndex = 0; mhoIndex <= (mhos - 1); mhoIndex++) {
+		for (int mhoIndex = 0; mhoIndex <= (mhos-1); mhoIndex++) {
 			Point mhoPoint = nextEmptyRandom();
 			Mho mho = new Mho(mhoPoint, cellSize);
 			mhoList.add(mho);
@@ -213,12 +217,12 @@ public class Board extends JComponent {
 	 * @return
 	 */
 	private boolean isNonPlayerGamePiece(int x, int y) {
-		boolean toReturn = false;		
+		boolean retval = false;		
 		Point p = new Point(x,y);
 		
-		if (isOccupied(p) && (!you.getLocation().equals(p))) {
-			toReturn = true;
-		} return toReturn;
+		if (isOccupied(p) == true && (you.getLocation().equals(p) == false)) {
+			retval = true;
+		} return retval;
 	}
 	
 	/**
@@ -229,8 +233,8 @@ public class Board extends JComponent {
 		int nextX = gen.nextInt(10) + 1;
 		int nextY = gen.nextInt(10) + 1;
 		
-		Point nextOcc = new Point(nextX, nextY);
-		return nextOcc;
+		Point nextPoint = new Point(nextX, nextY);
+		return nextPoint;
 	}
 	
 	/**
@@ -243,7 +247,7 @@ public class Board extends JComponent {
 		int nextX = (int) p.getX();
 		int nextY = (int) p.getY();
 		
-		if(occupied[nextX][nextY]) {
+		if (occupied[nextX][nextY] == true) {
 			return nextEmptyRandom();
 		} else {
 			return p;
@@ -260,7 +264,7 @@ public class Board extends JComponent {
 		int nextX = (int) p.getX();
 		int nextY = (int) p.getY();
 		
-		if(notFence(nextX, nextY)) {
+		if (notFence(nextX, nextY) == true) {
 			return p;
 		} else {
 			return randomJump();
@@ -296,14 +300,14 @@ public class Board extends JComponent {
 	 * @return
 	 */
 	public boolean notFence(int x, int y) {
-		boolean toReturn = true;
+		boolean retval = true;
 		
 		for(Fence f : fenceList) {
-			if ((f.getX() == x) && (f.getY() == y)) {
-				toReturn = false;
+			if ((f.getX() == x) == true && (f.getY() == y) == true) {
+				retval = false;
 				break;
 			}
-		} return toReturn;
+		} return retval;
 	}
 	
 	/**
@@ -332,12 +336,12 @@ public class Board extends JComponent {
 		
 		you.draw(g2);
 		
-		if (userCanMove) {
+		if (userCanMove == true) {
 			g2.setFont(theFont);
 			g2.drawString(yourTurn, (int) (12.5 * cellSize), (2 * cellSize));
 		}
 		
-		if (bckgrnd.getGameOver()) {
+		if (bckgrnd.getGameOver() == true) {
 			add(bckgrnd.reset);
 			add(bckgrnd.quit);
 			bckgrnd.draw(g2);
@@ -350,7 +354,7 @@ public class Board extends JComponent {
 	 * @param move is the direction moved
 	 */
 	public void keyInput(Movement move) {
-		if (userCanMove) {
+		if (userCanMove == true) {
 			if (move != Movement.Jump) {
 				userCanMove = false;
 			} doKeyInput(move);
@@ -414,7 +418,7 @@ public class Board extends JComponent {
 		you.setLocation(newLocation);
 		repaint();
 		
-		if (occupied[newX][newY] && (move != Movement.Nowhere)) {
+		if (occupied[newX][newY] == true && (move != Movement.Nowhere)) {
 			bckgrnd.setGameOver(true);
 		} else {
 			occupied[newX][newY] = true;
@@ -432,13 +436,13 @@ public class Board extends JComponent {
 	private void nextTurn() {	
 		ArrayList<Mho> newMhoList = new ArrayList<Mho>(); 
 		
-		if (!bckgrnd.getGameOver()) {
+		if (bckgrnd.getGameOver() == false) {
 			for (Mho y : mhoList) {
 				Mho newMho = y;
 				moveMho(newMho);
 				newMhoList.add(newMho);
 				
-				if (fence(newMho.getLocation())) {
+				if (fence(newMho.getLocation()) == true) {
 					newMhoList.remove(newMho);
 				}
 			}
@@ -464,37 +468,37 @@ public class Board extends JComponent {
 		boolean sameRow = sameRow(w, you);
 		boolean sameColumn = sameColumn(w, you);
 	
-		if (sameRow || sameColumn) {
+		if (sameRow == true || sameColumn == true) {
 			directMove(w, you, sameRow, sameColumn);
 		}
 		
 		//Diagonal move.
-		else if (diagonal(w, you) && (!isNonPlayerGamePiece(diagonalMoveLocation(w, you)))) {
+		else if (diagonal(w, you) == true && (isNonPlayerGamePiece(diagonalMoveLocation(w, you)) == false)) {
 			w.setLocation(diagonalMoveLocation(w, you));		
 		}
 		
 		//Horizontal move.
-		else if ((horizGreaterThanVert(w, you)) && (!isNonPlayerGamePiece(horizMoveLocation(w, you)))) {
+		else if ((horizGreaterThanVert(w, you) == true) && (isNonPlayerGamePiece(horizMoveLocation(w, you)) == false)) {
 			w.setLocation(horizMoveLocation(w, you));
 		}
 		
 		//Vertical move.
-		else if ((!(horizGreaterThanVert(w, you))) && (!isNonPlayerGamePiece(horizMoveLocation(w, you)))) {
+		else if ((horizGreaterThanVert(w, you) == false) && (isNonPlayerGamePiece(horizMoveLocation(w, you)) == false)) {
 			w.setLocation(vertMoveLocation(w, you));
 		}
 		
 		//Diagonal move to fence.
-		else if (diagonal(w, you) && (!notFence(diagonalMoveLocation(w, you)))) {
+		else if (diagonal(w, you) == true && (notFence(diagonalMoveLocation(w, you)) == false)) {
 			w.setLocation(diagonalMoveLocation(w, you));	
 		}
 		
 		//Horizontal move to fence.
-		else if ((horizGreaterThanVert(w, you)) && (!notFence(horizMoveLocation(w, you)))) {
+		else if (horizGreaterThanVert(w, you) == true && notFence(horizMoveLocation(w, you)) == false) {
 			w.setLocation(horizMoveLocation(w, you));
 		}
 		
 		//Vertical move to fence.
-		else if ((!(horizGreaterThanVert(w, you))) && (!notFence(horizMoveLocation(w, you)))) {
+		else if (horizGreaterThanVert(w, you) == false && notFence(horizMoveLocation(w, you)) == false) {
 			w.setLocation(vertMoveLocation(w, you));
 		}
 		
@@ -543,9 +547,9 @@ public class Board extends JComponent {
 		int newColumn = (int) p.getX();
 		int newRow = (int) p.getY();
 		
-		if (row) {
+		if (row == true) {
 			newColumn = moveNumCloser(newColumn, (int) r.getX());
-		} if (column) {
+		} if (column == true) {
 			newRow = moveNumCloser(newRow, (int) r.getY());
 		}
 		
@@ -592,13 +596,13 @@ public class Board extends JComponent {
 	 * @return
 	 */
 	private boolean horizGreaterThanVert(GamePiece a, GamePiece b) {
-		boolean toReturn = false;
+		boolean retval = false;
 		int horizontal = Math.abs((a.getX() - b.getX()));
 		int vertical = Math.abs((a.getY() - b.getY()));
 		
 		if (horizontal > vertical) {
-			toReturn = true;
-		} return toReturn;
+			retval = true;
+		} return retval;
 	}
 
 	/**
@@ -639,9 +643,9 @@ public class Board extends JComponent {
 	 */
 	private int moveNumCloser(int numThatWillMove, int otherNum) {
 		if (otherNum > numThatWillMove) {
-			return (numThatWillMove + 1);
+			return numThatWillMove +1;
 		} if (otherNum < numThatWillMove) {
-			return (numThatWillMove - 1);
+			return numThatWillMove -1;
 		} else {
 			return otherNum;
 		}
