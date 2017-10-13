@@ -49,15 +49,13 @@ public class Board extends JComponent {
 	 * @param fencenum is number of faces
 	 * @param Frame is the frame of the game
 	 */
-<<<<<<< HEAD:hiVoltsPackage/Board.java
+
 	public Board(int size, int mhonum, int fencenum, Frame tehFrame) {
-=======
-	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame Frame) {
->>>>>>> 2deb6d1cefe04359c9070702f373e2be0887cabe:hiVoltsPackage/HiVoltsBoardComponent.java
+
 		
 		cellSize = size;
 		theFont = new Font("theFont", 1, (cellSize / 2));
-		frame = Frame;
+		frame = tehFrame;
 		
 		//Creates background.
 		bckgrnd = new Background(cellSize, this);
