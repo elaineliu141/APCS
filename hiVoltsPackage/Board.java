@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
 
-public class HiVoltsBoardComponent extends JComponent {
+public class Board extends JComponent {
 	
 	public int cellSize;
-	public HiVoltsFrame frame;
+	public Frame frame;
 	
 	//Number of mhos and fences.
 	public int originalMhos;
@@ -38,7 +38,7 @@ public class HiVoltsBoardComponent extends JComponent {
 	public static final long serialVersionUID = 823;
 	
 	//empty constructor
-	public HiVoltsBoardComponent() {
+	public Board() {
 		
 	}
 	
@@ -49,7 +49,7 @@ public class HiVoltsBoardComponent extends JComponent {
 	 * @param fencenum is number of faces
 	 * @param tehFrame is the frame of the game
 	 */
-	public HiVoltsBoardComponent(int size, int mhonum, int fencenum, HiVoltsFrame tehFrame) {
+	public Board(int size, int mhonum, int fencenum, Frame tehFrame) {
 		
 		cellSize = size;
 		theFont = new Font("theFont", 1, (cellSize / 2));

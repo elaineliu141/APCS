@@ -3,7 +3,7 @@ package hiVoltsPackage;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class GamePiece extends Face {
+public class GamePiece extends Character {
 	public enum PieceType {Player, Mho, Fence};
 	public PieceType pType;
 	public int xGrid; //x coordinate of cell on grid

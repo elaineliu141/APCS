@@ -9,7 +9,7 @@ public class Main
 		int mhos = 12;
 		
 		//Creates an object and inputs number of mhos and fences.
-		HiVoltsFrame hivolts = new HiVoltsFrame();
+		Frame hivolts = new Frame();
 		hivolts.setUp(mhos, fences);
 		hivolts.setVisible(true);
 	}

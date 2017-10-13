@@ -1,12 +1,12 @@
 package hiVoltsPackage;
 import javax.swing.JFrame;
 
-public class HiVoltsFrame extends JFrame {
+public class Frame extends JFrame {
 	
 	//implementation of MoveListener
 	private static final long serialVersionUID = 1L;
 	public MoveListener playerMover = new MoveListener();
-	public HiVoltsBoardComponent compo;
+	public Board compo;
 	
 	//scale of the display
 	public static int cellSize = 56;
@@ -23,7 +23,7 @@ public class HiVoltsFrame extends JFrame {
 	public void setUp(int mhoNum, int fenceNum) {	
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		compo = new HiVoltsBoardComponent(cellSize, mhoNum, fenceNum, this);
+		compo = new Board(cellSize, mhoNum, fenceNum, this);
 		
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setTitle("HiVolts!");

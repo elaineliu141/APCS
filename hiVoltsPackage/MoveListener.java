@@ -8,16 +8,16 @@ class MoveListener implements KeyListener
 {
 	public int code;
 	public boolean released = true;
-	public HiVoltsBoardComponent compo;
+	public Board compo;
 	
 	//Different Keys for Movement (implementation)
-	public HiVoltsBoardComponent.Movement[] direction = new HiVoltsBoardComponent.Movement[156];
+	public Board.Movement[] direction = new Board.Movement[156];
 	
 	/**
 	 * Adds the Components of the Board into the Listener.
 	 * @param tehCompo object created from HivoltsBoardComponent
 	 */
-	public void addHiVoltsBoardComponent(HiVoltsBoardComponent tehCompo)
+	public void addHiVoltsBoardComponent(Board tehCompo)
 	{
 		compo = tehCompo;
 	}
@@ -60,22 +60,22 @@ class MoveListener implements KeyListener
 	// Sets up array with movements, etc.
 	{	
 		//Arrow keys (Up, Down, Left, Right).
-		direction[37] = HiVoltsBoardComponent.Movement.Left;
-		direction[39] = HiVoltsBoardComponent.Movement.Right;
-		direction[38] = HiVoltsBoardComponent.Movement.Up;
-		direction[40] = HiVoltsBoardComponent.Movement.Down;
+		direction[37] = Board.Movement.Left;
+		direction[39] = Board.Movement.Right;
+		direction[38] = Board.Movement.Up;
+		direction[40] = Board.Movement.Down;
 		
 		//Letters for movement (J etc).
-		direction[81] = HiVoltsBoardComponent.Movement.UpLeft;
-		direction[87] = HiVoltsBoardComponent.Movement.Up;
-		direction[69] = HiVoltsBoardComponent.Movement.UpRight;
-		direction[65] = HiVoltsBoardComponent.Movement.Left;
-		direction[83] = HiVoltsBoardComponent.Movement.Nowhere;
-		direction[68] = HiVoltsBoardComponent.Movement.Right;
-		direction[90] = HiVoltsBoardComponent.Movement.DownLeft;
-		direction[88] = HiVoltsBoardComponent.Movement.Down;
-		direction[67] = HiVoltsBoardComponent.Movement.DownRight;
-		direction[74] = HiVoltsBoardComponent.Movement.Jump;
+		direction[81] = Board.Movement.UpLeft;
+		direction[87] = Board.Movement.Up;
+		direction[69] = Board.Movement.UpRight;
+		direction[65] = Board.Movement.Left;
+		direction[83] = Board.Movement.Nowhere;
+		direction[68] = Board.Movement.Right;
+		direction[90] = Board.Movement.DownLeft;
+		direction[88] = Board.Movement.Down;
+		direction[67] = Board.Movement.DownRight;
+		direction[74] = Board.Movement.Jump;
 		
 	}
 	

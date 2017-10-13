@@ -38,7 +38,7 @@ public class Background
 	public int quitButtonY;
 	
 	//frame
-	public HiVoltsBoardComponent compo;
+	public Board compo;
 	public JButton reset;
 	public JButton quit;
 	public resetListenerClass resetListener = new resetListenerClass();
@@ -50,7 +50,7 @@ public class Background
 	 * @param diam diameter of the smiley face
 	 * @param tehCompo composition
 	 */
-	public Background(int diam, HiVoltsBoardComponent tehCompo) {
+	public Background(int diam, Board tehCompo) {
 		//win/lose message size
 		cellSize = diam; //sets scale to diameter
 		
