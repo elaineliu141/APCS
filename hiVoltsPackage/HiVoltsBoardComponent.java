@@ -91,61 +91,59 @@ public class HiVoltsBoardComponent extends JComponent {
 		setAllUnoccupied();
 		
 		//Gives mhos locations & sets locations to occupied.
-		for (int mhoDex = 0; mhoDex <= (mhos - 1); mhoDex++) {
+		for (int mhoIndex = 0; mhoIndex <= (mhos - 1); mhoIndex++) {
 			Point mhoPoint = nextEmptyRandom();
-			Mho aMho = new Mho(mhoPoint, cellSize);
-			mhoList.add(aMho);
-			occupied[aMho.getX()][aMho.getY()] = true;
+			Mho mho = new Mho(mhoPoint, cellSize);
+			mhoList.add(mho);
+			occupied[mho.getX()][mho.getY()] = true;
 		}
 		
 		//Gives inner fences locations & sets locations to occupied.
-		for (int fenceDex = 0; fenceDex <= (fences - 1); fenceDex++) {
+		for (int fenceIndex = 0; fenceIndex <= (fences - 1); fenceIndex++) {
 			Point fencePoint = nextEmptyRandom();
-			Fence aFence = new Fence(fencePoint, cellSize);
-			fenceList.add(aFence);
-			occupied[aFence.getX()][aFence.getY()] = true;
+			Fence fence = new Fence(fencePoint, cellSize);
+			fenceList.add(fence);
+			occupied[fence.getX()][fence.getY()] = true;
 		}
 		
 		//Gives border fences locations and sets locations to occupied.
-		int borderFenceDex = 0;
+		int borderFenceIndex = 0;
 		Point borderFencePoint;
 		
 		//Top & Bottom Fences
-		for (int xDex = 0; xDex <= 11; xDex++) {
-			borderFencePoint = new Point(xDex, 0);
-			Fence aFence = new Fence(borderFencePoint, cellSize);
-			borderFenceList.add(borderFenceDex, aFence);
-			occupied[aFence.getX()][aFence.getY()] = true;
-			borderFenceDex++;
+		for (int xIndex = 0; xIndex <= 11; xIndex++) {
+			borderFencePoint = new Point(xIndex, 0);
+			Fence fence = new Fence(borderFencePoint, cellSize);
+			borderFenceList.add(borderFenceIndex, fence);
+			occupied[fence.getX()][fence.getY()] = true;
+			borderFenceIndex++;
 			
-			borderFencePoint = new Point(xDex, 11);
-			aFence = new Fence(borderFencePoint, cellSize);
-			borderFenceList.add(aFence);
-			occupied[aFence.getX()][aFence.getY()] = true;
-			borderFenceDex++;
+			borderFencePoint = new Point(xIndex, 11);
+			fence = new Fence(borderFencePoint, cellSize);
+			borderFenceList.add(fence);
+			occupied[fence.getX()][fence.getY()] = true;
+			borderFenceIndex++;
 		}
 		
 		//Left & Right Fences
-		for (int yDex = 1; yDex <= 10; yDex++) {
-			borderFencePoint = new Point(0, yDex);
-			Fence aFence = new Fence(borderFencePoint, cellSize);
-			borderFenceList.add(borderFenceDex, aFence);
-			occupied[aFence.getX()][aFence.getY()] = true;
-			borderFenceDex++;
+		for (int yIndex = 1; yIndex <= 10; yIndex++) {
+			borderFencePoint = new Point(0, yIndex);
+			Fence fence = new Fence(borderFencePoint, cellSize);
+			borderFenceList.add(borderFenceIndex, fence);
+			occupied[fence.getX()][fence.getY()] = true;
+			borderFenceIndex++;
 			
-			borderFencePoint = new Point(11, yDex);
-			aFence = new Fence(borderFencePoint, cellSize);
-			borderFenceList.add(borderFenceDex, aFence);
-			occupied[aFence.getX()][aFence.getY()] = true;
-			borderFenceDex++;
+			borderFencePoint = new Point(11, yIndex);
+			fence = new Fence(borderFencePoint, cellSize);
+			borderFenceList.add(borderFenceIndex, fence);
+			occupied[fence.getX()][fence.getY()] = true;
+			borderFenceIndex++;
 		}
 		
 		//Creates player and gives player a location.
 		Point playerPoint = nextEmptyRandom();
-		you = new Player(playerPoint, cellSize);
-		
-		userCanMove = true;
-		
+		you = new Player(playerPoint, cellSize);	
+		userCanMove = true;	
 		repaint();
 		
 	}
@@ -215,8 +213,7 @@ public class HiVoltsBoardComponent extends JComponent {
 	 * @return
 	 */
 	private boolean isNonPlayerGamePiece(int x, int y) {
-		boolean toReturn = false;
-		
+		boolean toReturn = false;		
 		Point p = new Point(x,y);
 		
 		if (isOccupied(p) && (!you.getLocation().equals(p))) {
@@ -324,13 +321,13 @@ public class HiVoltsBoardComponent extends JComponent {
 		}
 		
 		for (int j = 0; j <= (fences - 1); j++) {
-			Fence phence = fenceList.get(j);
-			phence.draw(g2);
+			Fence fence = fenceList.get(j);
+			fence.draw(g2);
 		}
 		
 		for (int k = 0; k <= 43; k++) {
-			Fence phence = borderFenceList.get(k);
-			phence.draw(g2);
+			Fence fence = borderFenceList.get(k);
+			fence.draw(g2);
 		}
 		
 		you.draw(g2);
@@ -365,62 +362,60 @@ public class HiVoltsBoardComponent extends JComponent {
 	 * @param move is the direction moved
 	 */
 	private void doKeyInput(Movement move) {
-		Point oldLoc = you.getLocation();
-		int oldX = (int) oldLoc.getX();
-		int oldY = (int) oldLoc.getY();
+		Point oldLocation = you.getLocation();
+		int oldX = (int) oldLocation.getX();
+		int oldY = (int) oldLocation.getY();
 		int newX = oldX;
 		int newY = oldY;
-		Point newLoc = oldLoc;
+		Point newLocation = oldLocation;
 		
 		if (move == Movement.Left) {
 			newX = (oldX - 1);
 			newY = oldY;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.Right) {
 			newX = (oldX + 1);
 			newY = oldY;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.Up) {
 			newX = oldX;
 			newY = (oldY - 1);
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.Down) {
 			newX = oldX;
 			newY = (oldY + 1);
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.UpLeft) {
 			newX = oldX - 1;
 			newY = oldY - 1;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.UpRight) {
 			newX = oldX + 1;
 			newY = oldY - 1;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.DownLeft) {
 			newX = oldX - 1;
 			newY = oldY + 1;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.DownRight) {
 			newX = oldX + 1;
 			newY = oldY + 1;
-			newLoc.setLocation(newX, newY);
+			newLocation.setLocation(newX, newY);
 		} else if (move == Movement.Jump) {
-			newLoc = randomJump();
-			newX = (int) newLoc.getX();
-			newY = (int) newLoc.getY();
+			newLocation = randomJump();
+			newX = (int) newLocation.getX();
+			newY = (int) newLocation.getY();
 		}
 		
 		if (move != Movement.Nowhere) {
 			occupied[oldX][oldY] = false;
 		}
 		
-		you.setLocation(newLoc);
-		
+		you.setLocation(newLocation);
 		repaint();
 		
 		if (occupied[newX][newY] && (move != Movement.Nowhere)) {
 			bckgrnd.setGameOver(true);
-			//DO COOL THING!
 		} else {
 			occupied[newX][newY] = true;
 			repaint();
@@ -545,16 +540,16 @@ public class HiVoltsBoardComponent extends JComponent {
 		Point r = referencePiece.getLocation();		
 		Point p = pieceThatWillMove.getLocation();
 		
-		int newCol = (int) p.getX();
+		int newColumn = (int) p.getX();
 		int newRow = (int) p.getY();
 		
 		if (row) {
-			newCol = moveNumCloser(newCol, (int) r.getX());
+			newColumn = moveNumCloser(newColumn, (int) r.getX());
 		} if (column) {
 			newRow = moveNumCloser(newRow, (int) r.getY());
 		}
 		
-		p = new Point(newCol, newRow);
+		p = new Point(newColumn, newRow);
 		pieceThatWillMove.setLocation(p);
 	}
 	
@@ -598,10 +593,10 @@ public class HiVoltsBoardComponent extends JComponent {
 	 */
 	private boolean horizGreaterThanVert(GamePiece a, GamePiece b) {
 		boolean toReturn = false;
-		int horiz = Math.abs((a.getX() - b.getX()));
-		int vert = Math.abs((a.getY() - b.getY()));
+		int horizontal = Math.abs((a.getX() - b.getX()));
+		int vertical = Math.abs((a.getY() - b.getY()));
 		
-		if (horiz > vert) {
+		if (horizontal > vertical) {
 			toReturn = true;
 		} return toReturn;
 	}
@@ -614,8 +609,8 @@ public class HiVoltsBoardComponent extends JComponent {
 	 */
 	private Point horizMoveLocation(GamePiece thatMoves, GamePiece reference) {
 		int moveX = thatMoves.getX();
-		int refX = reference.getX();
-		int newX = moveNumCloser(moveX, refX);
+		int refrenceX = reference.getX();
+		int newX = moveNumCloser(moveX, refrenceX);
 		
 		Point p = new Point(newX, thatMoves.getY());
 		return p;
@@ -629,8 +624,8 @@ public class HiVoltsBoardComponent extends JComponent {
 	 */
 	private Point vertMoveLocation(GamePiece thatMoves, GamePiece reference) {
 		int moveY = thatMoves.getY();
-		int refY = reference.getY();
-		int newY = moveNumCloser(moveY, refY);
+		int refrenceY = reference.getY();
+		int newY = moveNumCloser(moveY, refrenceY);
 		
 		Point p = new Point(thatMoves.getX(), newY);
 		return p;
